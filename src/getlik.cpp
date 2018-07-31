@@ -1,5 +1,7 @@
 #include "unmixR.h"
-#include <math.h>
+
+// Comment out this line for debugging output:
+# define D(X) do {} while (0)
 
 // CHECKED
 
@@ -42,21 +44,10 @@ double getlik(STUD *consts, MNIW *priors, NORMslice *stats, rowvec y, int n, boo
 		}
 	}
 
-	double lp, lpx;
-
 	if (!(suffs) | lik) {
 		rowvec u(y - mu);
 		mat z = solve(stats->inv_cov, trans(u));
-		lpx = as_scalar(consts->pc_gammaln_by2(vd - 1) - (consts->pc_gammaln_by2(v - 1) + d2 * (consts->pc_log(v - 1) + consts->pc_log_pi)) - stats->log_det_cov - (vd / 2.0) * log(1.0 + (1.0 / v) * dot(u, z)));
-
-		v = priors->v_0 + n;
-		vd = v + consts->D;
-
-		double p = as_scalar(tgamma(vd / 2.0) / (tgamma(v / 2.0) * pow(v, consts->D / 2.0) * pow(M_PI, consts->D / 2.0)) * sqrt(exp(stats->log_det_cov)) * pow(1.0 + (1.0 / v) * (u * stats->inv_cov * trans(u)), -(vd / 2.0)));
-		lp = log(p);
-		
-		D("[getlik] lp: " << lp << "  lpx: " << lpx << "\n");
-
+		double lp = as_scalar(consts->pc_gammaln_by2(vd - 1) - (consts->pc_gammaln_by2(v - 1) + d2 * (consts->pc_log(v - 1) + consts->pc_log_pi)) - stats->log_det_cov - (vd / 2.0) * log(1.0 + (1.0 / v) * dot(u, z)));
 		if (ISNAN(lp)) {
 			D("[getlik]              n: " << n << "\n");
 			D("[getlik]            v_0: " << priors->v_0 << "\n");

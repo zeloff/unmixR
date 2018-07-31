@@ -4,7 +4,8 @@
 
 #include "unmixR.h"
 
-//# define D(X) do {} while (0)
+// Comment out this line for debugging output:
+# define D(X) do {} while (0)
 
 using namespace Rcpp;
 using namespace arma;
@@ -188,9 +189,6 @@ SEXP DPM_sampler(int thin, int iters, NumericMatrix data_, NumericMatrix baselin
 			D("[main] Updating alpha.\n");
       trace = 3;
 			update_alpha(&alpha, N, K_plus, priors);
-
-// TODO: REMOVE!!!
-//			alpha = 0.3;
 
 			D("[main] Alpha updated.\n");
 			D("[main]   * alpha: " << alpha << "\n");

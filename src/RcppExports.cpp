@@ -24,13 +24,13 @@ BEGIN_RCPP
 END_RCPP
 }
 // elink
-SEXP elink(NumericMatrix x);
-RcppExport SEXP _unmixR_elink(SEXP xSEXP) {
+SEXP elink(NumericMatrix ss);
+RcppExport SEXP _unmixR_elink(SEXP ssSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< NumericMatrix >::type x(xSEXP);
-    rcpp_result_gen = Rcpp::wrap(elink(x));
+    Rcpp::traits::input_parameter< NumericMatrix >::type ss(ssSEXP);
+    rcpp_result_gen = Rcpp::wrap(elink(ss));
     return rcpp_result_gen;
 END_RCPP
 }
@@ -58,12 +58,34 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// tests2
+SEXP tests2();
+RcppExport SEXP _unmixR_tests2() {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    rcpp_result_gen = Rcpp::wrap(tests2());
+    return rcpp_result_gen;
+END_RCPP
+}
+// fa
+SEXP fa();
+RcppExport SEXP _unmixR_fa() {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    rcpp_result_gen = Rcpp::wrap(fa());
+    return rcpp_result_gen;
+END_RCPP
+}
 
 static const R_CallMethodDef CallEntries[] = {
     {"_unmixR_DPM_sampler", (DL_FUNC) &_unmixR_DPM_sampler, 7},
     {"_unmixR_elink", (DL_FUNC) &_unmixR_elink, 1},
     {"_unmixR_rwishart", (DL_FUNC) &_unmixR_rwishart, 2},
     {"_unmixR_rinvwishart", (DL_FUNC) &_unmixR_rinvwishart, 2},
+    {"_unmixR_tests2", (DL_FUNC) &_unmixR_tests2, 0},
+    {"_unmixR_fa", (DL_FUNC) &_unmixR_fa, 0},
     {NULL, NULL, 0}
 };
 

@@ -1,4 +1,4 @@
-as_dist <- function(x, labels) {
+as.dist <- function(x, labels) {
 	ff <- function(a, b, mat) {
 	
 		get_dist <- function(x, y) {
@@ -10,5 +10,5 @@ as_dist <- function(x, labels) {
 
 	out <- outer(1:nrow(x), 1:nrow(x), ff, x)
 	dimnames(out) <- list(labels, labels)
-	stats::as.dist(out)
+	as.dist(out)
 }

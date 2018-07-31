@@ -43,7 +43,7 @@ void crp_gibbs(ivec* source_id, STUD *consts, MNIW *priors, std::vector<NORMslic
 			tempcounts(old_source_id)--; 
 			tempallcounts(old_source_id)--; 
 
-			if ((tempcounts[old_source_id] == 0) & (old_source_id > (consts->nsources - 1))) { // If this source is now empty and is the last source
+			if (tempcounts[old_source_id] == 0 & old_source_id > (consts->nsources - 1)) { // If this source is now empty and is the last source
 				dels = true; // then something will change
 				//
 				// Drop this source and move everyone back (no zeros are allowed in the
@@ -98,7 +98,6 @@ void crp_gibbs(ivec* source_id, STUD *consts, MNIW *priors, std::vector<NORMslic
 			 */
 			vec likelihood = zeros(prior.size());
 			for (int ell = 0; ell <= last_class; ell++) {
-//				D("[crp_gibbs] i: " << i << "  ell: " << ell << "  old_source_id: " << old_source_id << " - " << (old_source_id == ell || old_source_id == -1) << "\n");
 				likelihood[ell] = getlik(consts, priors, &tempstats[ell], y, tempallcounts[ell], true, (old_source_id == ell || old_source_id == -1));
 			}
 			likelihood(last_class + 1) = pupa(i); // actually, this is new 'top source' which was just added
@@ -114,7 +113,6 @@ void crp_gibbs(ivec* source_id, STUD *consts, MNIW *priors, std::vector<NORMslic
 			posterior = prior % likelihood;
 			posterior /= sum(posterior); // Normalize the posterior
 
-			D("[crp_gibbs] posterior: " << trans(posterior));
 			/*
 			 * Pick the new source
 			 */
@@ -123,9 +121,6 @@ void crp_gibbs(ivec* source_id, STUD *consts, MNIW *priors, std::vector<NORMslic
 
 			vec cs = cumsum(posterior);
 			double r = as_scalar(randu(1));
-			// TODO: remove!!!
-//			double r = 0.5;
-			D("[crp_gibbs] cs: " << trans(cs) << "  r: " << r << "\n");
 			uvec ff(find(cs > r));
 			int new_source_ids = ff(0);
 
@@ -168,12 +163,11 @@ void crp_gibbs(ivec* source_id, STUD *consts, MNIW *priors, std::vector<NORMslic
 			} // if changed 
 			trace = 14;
 		} // for
-		D("\n");
 	} catch ( std::domain_error& __de__ ) {
-		D("[crp_gibbs] error after step " << trace << "\n");
+		std::cerr << "[crp_gibbs] error after step " << trace << "\n";
 		throw __de__;
 	} catch ( std::exception& __ex__ ) {
-		D("[crp_gibbs] error after step " << trace << "\n");
+		std::cerr << "[crp_gibbs] error after step " << trace << "\n";
 		throw __ex__;
 	}
 }

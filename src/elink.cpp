@@ -1,28 +1,21 @@
 #include "unmixR.h"
 
+// Comment out this line for debugging output:
+# define D(X) do {} while (0)
+
 using namespace Rcpp;
 using namespace arma;
 
-//' Exact linkage algorithm
-//'
-//' Algorithm by Dawnson & Belkir (2009) to construct a tree based on estimates
-//' of marginal co-assignment probabilities.
-//'
-//' @param x A matrix with the class assignments for each individual (rows) in '
-//' each iteration (rows)
-//'
-//' @return a \code{list} containing two objects: \code{pairs}, a matrix with
-//' the pairs of leaves/groups that make up the tree, and \code{distances}, a
-//' numeric vector with the distance between the elements of each pair
-//' 
-//' @export
 // [[Rcpp::export]]
-SEXP elink(NumericMatrix x)
+SEXP elink(NumericMatrix ss)
 {
-	mat S(x.begin(), x.nrow(), x.ncol(), false);
+	mat S(ss.begin(), ss.nrow(), ss.ncol(), false);
 
 	uword n = S.n_rows;
 	uword niter = S.n_cols;
+
+	D("[elink] n: " << n << "\n");
+	D("[elink] niter: " << niter << "\n");
 
 	mat meanDI;
 
@@ -57,6 +50,7 @@ SEXP elink(NumericMatrix x)
 		}
 	}
 
+	D("[elink] First pair: " << Z(0, 0) << " " << Z(0, 1) << " " << z(0) << "\n");
 	// New group
 	R.submat(n, 0, n, 1) = Z.row(0);
 
@@ -70,17 +64,23 @@ SEXP elink(NumericMatrix x)
 	MID.shed_row(Z(1));
 	MID.shed_row(Z(0));
 
+	//
+	
 	uvec an0, an1, allnode;
 
 	for (uword s = 1; s < n - 1; s++) {
+		D("[elink] s: " << s << "\n");
+		D("[elink]   Z(s - 1): " << Z.row(s - 1));
 		// Get the nodes on the same group as the ones on Z.row(s - 1) 
 		an0 = trans(R.row(Z(s - 1, 0)));
 		an0 = an0.elem(find(an0));
 		an1 = trans(R.row(Z(s - 1, 1)));
 		an1 = an1.elem(find(an1));
 		allnode = join_cols(an0, an1);
+		D("[elink]   Nodes on the same group as Z(s - 1): " << trans(allnode));
 
 		// Add new group n + s - 1
+		D("[elink]   New group: " << n + s - 1 << "\n");
 		MID.insert_rows(MID.n_rows, 1);
 		MID(MID.n_rows - 1) = n + s - 1;
 		meanDI.insert_rows(meanDI.n_rows, 1, true);
@@ -88,6 +88,7 @@ SEXP elink(NumericMatrix x)
 		vec DIC = ones<vec>(n - s - 1);
 
 		// Calculate the distance of each leaf/group to the newly added group
+		D("[elink]   Calculating distance to other leafs/groups (0 - " << n - s - 2 << ")\n");
 		uvec nodes;
 		double temp;
 		for (uword o = 0; o < n - s - 1; o++) {
@@ -102,11 +103,15 @@ SEXP elink(NumericMatrix x)
 				}
 			}
 		}
+		D("[elink]   DIC(" << DIC.n_rows << "): " << sum(DIC) << "\n");
+		D("[elink]   Rows: 0:" << n - s - 2 << ",\tCol: " << n - s - 1 << "\n");
+		D("[elink]    Row: " << n - s - 1 << ",\tCol: 0:" << n - s - 2 << "\n");
 
 		meanDI.submat(0, n - s - 1, n - s - 2, n - s - 1) = DIC;
 		meanDI.submat(n - s - 1, 0, n - s - 1, n - s - 2) = trans(DIC);
 
 		// Find new closest pair...
+		D("[elink]   Finding closest pair (ranges: 0-" << n - s - 2 << ", i-" << n - s - 1 << "): ");
 		int ro = 0, col = 0;
 		for (uword i = 0; i < n - s - 1; i++) {
 			for (uword j = i; j < n - s; j++) {
@@ -116,7 +121,8 @@ SEXP elink(NumericMatrix x)
 				}
 			}
 		}
-		//
+		D(ro << "-" << col << " (" << meanDI(ro, col) << ")\n");
+
 		// ... store it ...
 		Z(s, 0) = MID(ro);
 		Z(s, 1) = MID(col);
@@ -134,10 +140,13 @@ SEXP elink(NumericMatrix x)
 		}
 
 		// ... update the R matrix ...
+//		D("[elink]   newgr1: " << trans(newgr1) << "[elink]   newgr2: " << trans(newgr2));
 		if (newgr1.n_rows + newgr2.n_rows > 1) {
 			R.submat(n + s, 0, n + s, newgr1.n_rows + newgr2.n_rows - 1) = trans(join_cols(newgr1, newgr2));
 		}
+		D("[elink]  R(" << n + s << ", 0:" << newgr1.n_rows + newgr2.n_rows - 1 << "):" << R.submat(n + s, 0, n + s, newgr1.n_rows + newgr2.n_rows - 1));
 
+		D("[elink]  Dropping " << ro << " and " << col << "\n");
 		// ... and finally drop the new best pair
 		if (ro > col) {
 			meanDI.shed_row(ro);

@@ -19,6 +19,3 @@ A names vector with parameters \code{a} and \code{b}
 \description{
 Prior parameters for gamma function
 }
-\examples{
-gamma_prior(150, distr = 'pois', lambda = 3)
-}

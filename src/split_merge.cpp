@@ -1,5 +1,8 @@
 #include "unmixR.h"
-// # define D(X) do {} while (0)
+
+// Comment out this line for debugging output:
+# define D(X) do {} while (0)
+
 // [[Rcpp::depends(RcppArmadillo)]]
 
 using namespace Rcpp;
@@ -43,9 +46,6 @@ void split_merge(mat data, ivec *source_id, STUD *consts, int N, MNIW *priors, s
 	while (inds(0) == inds(1)) {
 		inds = randi<uvec>(2, distr_param(0, consts->N - 1));
 	}
-	// TODO: REMOVE!!!
-//	inds << 114 << 67 << endr; // Test case for merging
-//	inds << 2 << 3 << endr; // Test case for splitting
 
 	uword s1 = source_ids_temp(inds(0));
 	uword s2 = source_ids_temp(inds(1));
@@ -164,12 +164,8 @@ void split_merge(mat data, ivec *source_id, STUD *consts, int N, MNIW *priors, s
 	uvec kk;
 	if (merging) {
 		kk = shuffle(find((*source_id) == s1 || (*source_id) == s2));
-// TODO: REMOVE
-//		kk = find((*source_id) == s1 || (*source_id) == s2);
 	} else {
 		kk = shuffle(find((*source_id) == s2));
-// TODO: REMOVE
-//		kk = find((*source_id) == s2);
 	}
 	// Get the first of each class back to the start of the vector
 	kk.shed_row(as_scalar(find(kk == inds[0], 1)));
@@ -243,8 +239,6 @@ void split_merge(mat data, ivec *source_id, STUD *consts, int N, MNIW *priors, s
 	D("[split_merge] * alpha: " << alpha << "  MH_prior: " << MH_prior << "  MH_lik: " << MH_lik << "  MH_rat: " << MH_rat << "\n");
 
 	if (as_scalar(randu(1)) < MH_rat) {
-// TODO: REMOVE!!!
-//	if (0.5 < MH_rat) {
 		D("[split_merge]  really " << (merging ? "merging" : "splitting") << "\n");
 		if (merging) {
 			// First update suff stats of new merged group

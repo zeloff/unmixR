@@ -1,7 +1,7 @@
 #include "unmixR.h"
 // [[Rcpp::depends(RcppArmadillo)]]
 
-// CHECKED!
+// CHECKED
 
 using namespace Rcpp;
 using namespace arma;

@@ -2,8 +2,6 @@
 
 // CHECKED
 
-//# define D(X) do {} while (0)
-
 //using namespace Rcpp;
 using namespace arma;
 
@@ -40,19 +38,7 @@ void preallocate(STUD *consts, std::vector<NORMslice>* stats, MNIW *priors, ivec
 
 		mat inv_cov = chol(Sigma, "upper");
 		double log_det_cov = sum(log(inv_cov.diag()));
-		/*
-
-	double vd = v + consts->D;
-	double d2 = consts->D / 2.0;
-
-		try {
-			stats->inv_cov = chol(Sigma, "upper");
-			stats->log_det_cov = sum(log(diagvec(stats->inv_cov)));
-		} catch ( std::exception& __ex__ ) {
-			throw __ex__;
-		}
-*/
-
+		
 		consts->ns(src) = counts;
 		consts->orgmeans.col(src) = trans(means);
 		consts->orgsum_squares.slice(src) = ss2;

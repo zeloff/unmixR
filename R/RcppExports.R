@@ -5,21 +5,8 @@ DPM_sampler <- function(thin, iters, data_, baseline_, labels_, consts_, params)
     .Call('_unmixR_DPM_sampler', PACKAGE = 'unmixR', thin, iters, data_, baseline_, labels_, consts_, params)
 }
 
-#' Exact linkage algorithm
-#'
-#' Algorithm by Dawnson & Belkir (2009) to construct a tree based on estimates
-#' of marginal co-assignment probabilities.
-#'
-#' @param x A matrix with the class assignments for each individual (rows) in '
-#' each iteration (rows)
-#'
-#' @return a \code{list} containing two objects: \code{pairs}, a matrix with
-#' the pairs of leaves/groups that make up the tree, and \code{distances}, a
-#' numeric vector with the distance between the elements of each pair
-#' 
-#' @export
-elink <- function(x) {
-    .Call('_unmixR_elink', PACKAGE = 'unmixR', x)
+elink <- function(ss) {
+    .Call('_unmixR_elink', PACKAGE = 'unmixR', ss)
 }
 
 rwishart <- function(v, s) {
@@ -28,5 +15,13 @@ rwishart <- function(v, s) {
 
 rinvwishart <- function(v, s) {
     .Call('_unmixR_rinvwishart', PACKAGE = 'unmixR', v, s)
+}
+
+tests2 <- function() {
+    .Call('_unmixR_tests2', PACKAGE = 'unmixR')
+}
+
+fa <- function() {
+    .Call('_unmixR_fa', PACKAGE = 'unmixR')
 }
 

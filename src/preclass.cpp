@@ -18,8 +18,6 @@ void preclass(STUD *consts, std::vector<NORMslice>* stats, MNIW *priors, ivec *a
 		vec cs = 1 - cumsum(distances / sum(distances));
 		
 		double rand = as_scalar(randu(1));
-// TODO: REMOVE THIS
-//		double rand = 0.5;
 		int choose = as_scalar(find(cs < rand, 1));
 
 		(*allcounts)(choose)++;
