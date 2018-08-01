@@ -17,11 +17,3 @@ rinvwishart <- function(v, s) {
     .Call('_unmixR_rinvwishart', PACKAGE = 'unmixR', v, s)
 }
 
-tests2 <- function() {
-    .Call('_unmixR_tests2', PACKAGE = 'unmixR')
-}
-
-fa <- function() {
-    .Call('_unmixR_fa', PACKAGE = 'unmixR')
-}
-
