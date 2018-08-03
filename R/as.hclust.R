@@ -1,3 +1,21 @@
+#' Hierarchical clustering of classification results
+#'
+#' Performs a hierarchical clustering of individuals from the distances between
+#' pairs.
+#' 
+#' @param x a matrix with three columns, in which the first two are integers
+#' identifying the individuals in each pair and the third is the distance
+#' between them.  Such a matrix can easily be obtained by \code{cbind}ing the
+#' two objects output by \code{elink()}.
+#' @param N the number of individuals
+#' @param labels a vector of labels to be assigned to each individual.  Defaults
+#' to 1:N
+#'
+#' @return a \code{hclust} object
+#'
+#' @seealso \link{elink}
+#'
+#' @export
 as.hclust <- function(x, N, labels = 1:N) {
 	# Leaves are negative numbers
 	x[x[, 1] <= N, 1] <- -x[x[, 1] <= N, 1]
@@ -57,8 +75,6 @@ as.hclust <- function(x, N, labels = 1:N) {
 	next_leaf <- 1
 	ff3(nrow(dend$merge) - 1)
 	of3 <- ordr
-	print(of2)
-	print(of3)
 
 	dend$order <- of3
 	dend$labels <- labels

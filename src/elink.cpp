@@ -6,6 +6,19 @@
 using namespace Rcpp;
 using namespace arma;
 
+//' Exact linkage algorithm
+//'
+//' This function uses an exact linkage algorithm to compute the distance
+//' between pairs of individuals, based on the set of class assignments produced
+//' by \code{DPM_sampler}.
+//'
+//' @param ss A numeric matrix with the assignments for each individual (rows)
+//' in each iteration (columns), as output by \code{DPM_sampler}
+//'
+//' @return A list with two elements: a two-column matrix with pairs of
+//' individuals (one per row) and a numeric vector with the distances between
+//' each pair
+//'
 // [[Rcpp::export]]
 SEXP elink(NumericMatrix ss)
 {

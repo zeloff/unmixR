@@ -7,10 +7,10 @@
 KLD(ab, params)
 }
 \arguments{
-\item{ab}{A vector with the initial values for the Gamma(a, b) prior
+\item{ab}{A vector with the initial values for the \eqn{Gamma(a, b)} prior
 parameters}
 
-\item{params}{A list of fixed parameters. See details.}
+\item{params}{A list of fixed parameters. See ``Details''.}
 }
 \value{
 An atomic numeric vector with the value of the Kullback-Leibler

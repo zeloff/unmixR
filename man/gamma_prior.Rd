@@ -17,5 +17,20 @@ gamma_prior(n, distr = c("unif", "pois", "nbinom", "lnorm", "norm"), ...)
 A names vector with parameters \code{a} and \code{b}
 }
 \description{
-Prior parameters for gamma function
+Determines the optimal parameters for the gamma distribution, given the
+specified sample size and prior distribution, by minimizing the
+Kullback-Leibler divergence between both.
+}
+\note{
+Sample size has an upper bound on 170.  The Stirling numbers of the
+first kind for values greater than that become too large, get translated as
+infinite, and the optimization function fails.
+}
+\examples{
+gamma_prior(50, 'unif')
+gamma_prior(50, 'pois', lambda = 5)
+gamma_prior(50, 'lnorm', meanlog = 1.6, sdlog = 0.69)
+}
+\seealso{
+\link{KLD}, \link{stirling1}
 }

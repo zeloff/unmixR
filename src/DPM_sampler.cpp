@@ -10,6 +10,45 @@
 using namespace Rcpp;
 using namespace arma;
 
+//' Dirichlet Process Mixture Sampler
+//'
+//' Runs a bayesian infinite mixture model as defined by Neubauer (2013) to
+//' to classify data using an incomplete baseline.
+//'
+//' The initial parameters for all prior distributions must be passed to the
+//' function, as a list with elements \code{a_0}, \code{b_0}, \code{k_0},
+//' \code{v_0}, \code{ak_0} and \code{bk_0} (numeric atomic vectors),
+//' \code{mu_0} (numeric vector), and \code{lambda_0} (numeric matrix).  See
+//' Neubauer (2013) for details.
+//' 
+//' @param thin A positive integer value specifying the reciprocal of the
+//' proportion of iterations to be kept (see ``Note'' below)
+//' @param iters The number of iterations to run
+//' @param data_ A matrix of data to be classified
+//' @param baseline_ A matrix with the baseline data
+//' @param labels_ A character vector with the class names for each of the
+//' baseline individuals
+//' @param consts_ A list containing constant parameters (\code{pc_maxind},
+//' \code{pc_gammaln_by2}, \code{pc_log_pi}, \code{pc_log}).
+//' @param params A list with the parameters for the prior distributions (see
+//' ``Details'')
+//'
+//' @note For consistency with the original code from Philipp Neubauer, the
+//' \code{thin} argument follows the same behaviour as on the
+//' \code{PopR} package: 1 will keep all iterations, 2 will keep half of the
+//' iterations, 4 will keep a quarter, etc.  This means that it is impossible to
+//' thin less that half of the iterations.  Note that thinning is discouraged
+//' (see Link and Eaton, 2012).
+//'
+//' @references
+//' Neubauer, P. and Shima, J. S., and Swearer, S. E. (2013), Inferring
+//' dispersal and migrations from incomplete geochemical baselines: analysis of
+//' population structure using Bayesian infinite mixture models. Methods in
+//' Ecology and Evolution, 4: 836-845. doi:10.1111/j.2041-210X.12076
+//'
+//' Link, W. A. and Eaton, M. J. (2012), On thinning of chains in MCMC. Methods
+//' in Ecology and Evolution, 3: 112-115. doi:10.1111/j.2041-210X.2011.00131.x
+//'
 // [[Rcpp::export]]
 SEXP DPM_sampler(int thin, int iters, NumericMatrix data_, NumericMatrix baseline_, CharacterVector labels_, List consts_, List params) {
 

@@ -1,6 +1,6 @@
 Package: unmixR
 Title: Analysis of population structure in R using finite and infinite Bayesian mixture models
-Version: 0.4
+Version: 0.4.1
 Authors@R: c(
     person("José Francisco", "Loff", email = "jfloff@phistat.com", role = c("aut", "cre")),
     person("Philipp", "Neubauer", email = "neubauer.phil@gmail.com", role = "aut"))

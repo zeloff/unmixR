@@ -12,9 +12,9 @@
 #' first kind for \eqn{n} elements and \eqn{n} cycles must also be passed as a
 #' fixed parameter.
 #' 
-#' @param ab A vector with the initial values for the Gamma(a, b) prior
+#' @param ab A vector with the initial values for the \eqn{Gamma(a, b)} prior
 #' parameters
-#' @param params A list of fixed parameters. See details.
+#' @param params A list of fixed parameters. See ``Details''.
 #'
 #' @return An atomic numeric vector with the value of the Kullback-Leibler
 #' divergence
@@ -38,7 +38,7 @@ KLD <- function(ab, params) {
 		#   alpha^(pars$k + pars$a - 1) * exp(-pars$b * alpha) * gamma(alpha) /
 		#   gamma(alpha + pars$n)
 		#
-		# but gamma() has a somewhat short range that makes it innapropriate
+		# but gamma() has a somewhat short range that makes it inappropriate
 		# for integration up to Inf, so we exp(log()) the entire thing to use
 		# lgamma() instead:
 		exp((pars$k + pars$a - 1) * log(alpha) - pars$b * alpha + lgamma(alpha) -
