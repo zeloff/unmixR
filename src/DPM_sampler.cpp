@@ -49,6 +49,7 @@ using namespace arma;
 //' Link, W. A. and Eaton, M. J. (2012), On thinning of chains in MCMC. Methods
 //' in Ecology and Evolution, 3: 112-115. doi:10.1111/j.2041-210X.2011.00131.x
 //'
+//' @export
 // [[Rcpp::export]]
 SEXP DPM_sampler(int thin, int iters, NumericMatrix data_, NumericMatrix baseline_, CharacterVector labels_, List consts_, List params) {
 

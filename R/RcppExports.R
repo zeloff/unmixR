@@ -40,6 +40,7 @@
 #' Link, W. A. and Eaton, M. J. (2012), On thinning of chains in MCMC. Methods
 #' in Ecology and Evolution, 3: 112-115. doi:10.1111/j.2041-210X.2011.00131.x
 #'
+#' @export
 DPM_sampler <- function(thin, iters, data_, baseline_, labels_, consts_, params) {
     .Call('_unmixR_DPM_sampler', PACKAGE = 'unmixR', thin, iters, data_, baseline_, labels_, consts_, params)
 }
@@ -57,6 +58,7 @@ DPM_sampler <- function(thin, iters, data_, baseline_, labels_, consts_, params)
 #' individuals (one per row) and a numeric vector with the distances between
 #' each pair
 #'
+#' @export
 elink <- function(ss) {
     .Call('_unmixR_elink', PACKAGE = 'unmixR', ss)
 }
@@ -68,4 +70,3 @@ rwishart <- function(v, s) {
 rinvwishart <- function(v, s) {
     .Call('_unmixR_rinvwishart', PACKAGE = 'unmixR', v, s)
 }
-

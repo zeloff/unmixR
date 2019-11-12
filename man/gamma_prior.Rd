@@ -30,6 +30,7 @@ infinite, and the optimization function fails.
 gamma_prior(50, 'unif')
 gamma_prior(50, 'pois', lambda = 5)
 gamma_prior(50, 'lnorm', meanlog = 1.6, sdlog = 0.69)
+
 }
 \seealso{
 \link{KLD}, \link{stirling1}

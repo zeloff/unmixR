@@ -15,11 +15,12 @@
 #' @return A names vector with parameters \code{a} and \code{b}
 #' 
 #' @seealso \link{KLD}, \link{stirling1}
-#' @export
 #' @examples
 #' gamma_prior(50, 'unif')
 #' gamma_prior(50, 'pois', lambda = 5)
 #' gamma_prior(50, 'lnorm', meanlog = 1.6, sdlog = 0.69)
+#'
+#' @export
 gamma_prior <-
 	function(n, distr = c('unif', 'pois', 'nbinom', 'lnorm', 'norm'), ...) {
 	

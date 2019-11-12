@@ -19,6 +19,7 @@ using namespace arma;
 //' individuals (one per row) and a numeric vector with the distances between
 //' each pair
 //'
+//' @export
 // [[Rcpp::export]]
 SEXP elink(NumericMatrix ss)
 {

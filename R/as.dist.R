@@ -14,7 +14,7 @@
 #' 
 #' @return an object of class \code{dist}
 #' @export
-as.dist <- function(x, labels) {
+as_dist <- function(x, labels) {
 	ff <- function(a, b, mat) {
 	
 		get_dist <- function(x, y) {
@@ -26,5 +26,5 @@ as.dist <- function(x, labels) {
 
 	out <- outer(1:nrow(x), 1:nrow(x), ff, x)
 	dimnames(out) <- list(labels, labels)
-	as.dist(out)
+	stats::as.dist(out)
 }

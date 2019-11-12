@@ -16,7 +16,7 @@
 #' @seealso \link{elink}
 #'
 #' @export
-as.hclust <- function(x, N, labels = 1:N) {
+as_hclust <- function(x, N, labels = 1:N) {
 	# Leaves are negative numbers
 	x[x[, 1] <= N, 1] <- -x[x[, 1] <= N, 1]
 	x[x[, 2] <= N, 2] <- -x[x[, 2] <= N, 2]
@@ -75,6 +75,8 @@ as.hclust <- function(x, N, labels = 1:N) {
 	next_leaf <- 1
 	ff3(nrow(dend$merge) - 1)
 	of3 <- ordr
+	print(of2)
+	print(of3)
 
 	dend$order <- of3
 	dend$labels <- labels

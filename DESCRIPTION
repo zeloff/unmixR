@@ -1,6 +1,6 @@
 Package: unmixR
 Title: Analysis of population structure in R using finite and infinite Bayesian mixture models
-Version: 0.4.1
+Version: 0.4.2
 Authors@R: c(
     person("José Francisco", "Loff", email = "jfloff@phistat.com", role = c("aut", "cre")),
     person("Philipp", "Neubauer", email = "neubauer.phil@gmail.com", role = "aut"))
@@ -8,12 +8,12 @@ Description: This package is a reimplementation of Philipp Neubauer's PopR
     package in R and C++.  unmixR is currently unfinished and should be used
     with care.
 Depends:
-    R (>= 3.1.1)
+    R (>= 3.6.0)
 License: GPL (>= 2)
 LazyData: true
 LinkingTo: Rcpp,
     RcppArmadillo
 Suggests:
     testthat
-RoxygenNote: 6.1.0
+RoxygenNote: 6.1.1
 Encoding: UTF-8
